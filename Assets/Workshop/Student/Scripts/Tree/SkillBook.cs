@@ -15,8 +15,8 @@ using UnityEngine.InputSystem;
         Skill fireWave;
         Skill fireExplosion;
 
-        public void Start()
-        {
+    public void Start()
+    {
         // build skill tree
         // └── Attack
         //     └── FireStorm
@@ -25,30 +25,40 @@ using UnityEngine.InputSystem;
         //             └── FireWave
         //                 └── FireExplosion
 
+        attack = new Skill("Attack");
+        fireStorm = new Skill("FireStorm");
+        fireBall = new Skill("FireBall");
+        fireBlast = new Skill("FireBlast");
+        fireWave = new Skill("FireWave");
+        fireExplosion = new Skill("FireExplosion");
+
         // 1. set the nextSkills for each skill
 
         // [0] Attack -> FireStorm
+        attack.nextSkills.Add(fireStorm);
 
         // [1] FireStorm -> FireBlast
+        fireStorm.nextSkills.Add(fireBlast);
 
         // [2] FireStorm -> FireBall
+        fireStorm.nextSkills.Add(fireBall);
 
         // [3] FireBall -> FireWave
+        fireBall.nextSkills.Add(fireWave);
 
         // [4] FireWave -> FireExplosion
-
-        // [5] Attack -> FireStorm
+        fireWave.nextSkills.Add(fireExplosion);
 
         this.attackSkillTree = new SkillTree(attack);
-        }
+    }
 
-        public void Update()
+    public void Update()
         {
             Keyboard keyboard = Keyboard.current;
             if (keyboard != null && keyboard.pKey.wasPressedThisFrame)
             {
-                attackSkillTree.rootSkill.PrintSkillTreeHierarchy("");
-                // attackSkillTree.rootSkill.PrintSkillTree();
+                //attackSkillTree.rootSkill.PrintSkillTreeHierarchy("");
+                 attackSkillTree.rootSkill.PrintSkillTree();
                 Debug.Log("====================================");
             } 
         }
